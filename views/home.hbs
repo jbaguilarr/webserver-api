@@ -5,11 +5,72 @@
 
 
 <div class="jumbotron">
-    <h1 class="display-4">Hola, {{capitalizar nombre}}</h1>
-    <p class="lead">This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.</p>
+
+    <table>
+    <tr>
+         <td>
+          
+                <input type="text" class="form-control" placeholder="Monto" aria-label="Username" aria-describedby="basic-addon1">
+           
+        </td>
+        <td>
+            <select class="form-control">
+                <option value="1">Ingreso</option>
+                <option value="2">Salida</option>
+            </select>
+        </td>
+        <td>
+            <button type="button" class="btn btn-primary">Transaccion</button>
+        </td>
+    </tr>    
+    </table>    
+    
+    <br>
     <hr class="my-4">
-    <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
-    <a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
+    <h4 class="display-5">Datos</h4>
+    
+    <hr class="my-4">
+    <table>
+    <tr>
+        <td><strong>Cuenta :</strong></td>
+        <td>825445362541</td>
+    </tr>
+    <tr>
+        <td><strong>Titular :</strong></td>
+        <td>Jose Bruno Aguilar Omonte</td>
+    </tr>
+    </table>    
+    <hr class="my-4">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+            <th scope="col">Fecha</th>
+            <th scope="col">Movimiento</th>
+            <th scope="col">Monto</th>
+            <th scope="col">Total</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+            <th scope="row">1</th>
+            <td>Mark</td>
+            <td>Otto</td>
+            <td>@mdo</td>
+            </tr>
+            <tr>
+            <th scope="row">2</th>
+            <td>Jacob</td>
+            <td>Thornton</td>
+            <td>@fat</td>
+            </tr>
+            <tr>
+            <th scope="row">3</th>
+            <td>Larry</td>
+            <td>the Bird</td>
+            <td>@twitter</td>
+            </tr>
+        </tbody>
+    </table>
 </div>
 
 {{>footer}}
