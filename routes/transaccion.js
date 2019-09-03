@@ -5,11 +5,14 @@ const app = express();
 let listadoTransaccion = [];
 let listadoPersona = [];
 
+
+
 const guardarDB = () => {
     let data = JSON.stringify(listadoTransaccion);
     fs.writeFile('db/transaction.json', data, (err) => {
         if (err) throw new Error('No se pudo grabar', err);
     });
+
 }
 const cargarTransaccionDB = () => {
     try {
