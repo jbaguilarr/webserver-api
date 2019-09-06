@@ -12,6 +12,7 @@
     "dependencies": {
         "express": "^4.16.4",
         "hbs": "^4.0.1",
+        "request-promise": "^4.2.4",
         "body-parser": "^1.18.3"
     }
 }

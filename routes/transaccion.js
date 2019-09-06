@@ -22,51 +22,89 @@ const cargarTransaccionDB = () => {
     }
     //console.log(listadoPorHacer);
 }
-const crear = (monto, tipotransaccion) => {
-    //[{ "id": 1, "monto": 0, "tipotransaccion": 1, "idpersona": 1 }]
+const cargarPersonaDB = () => {
+    try {
+        listadoPersona = require('../db/persona.json');
+    } catch (error) {
+        listadoPersona = [];
+    }
+    //console.log(listadoPorHacer);
+}
+const crear = (montox, xtipotransaccion) => {
+    //[{"id":1,"monto":0,"tipotransaccion":1,"idpersona":1,"fecha":"03/09/2019","saldo":0}]
     cargarTransaccionDB();
-    let LastId = listadoTransaccion[listadoTransaccion.length - 1].id + 1;
+    cargarPersonaDB();
+    let LastId = listadoTransaccion.length == 0 ? 1 : listadoTransaccion[listadoTransaccion.length - 1].id + 1;
     let codpersona = 1;
+    let d = new Date();
+    let strDate = d.getDate() + "/" + (d.getMonth() + 1) + "/" + d.getFullYear();
+
+    let saldopersona = listadoPersona[0].saldo;
+
+
+    let saldofinal = actualizar(xtipotransaccion, montox, saldopersona);
+
     let porHacer = {
         id: LastId,
-        monto,
-        tipotransaccion,
-        idpersona: codpersona
+        monto: montox,
+        tipotransaccion: xtipotransaccion,
+        idpersona: codpersona,
+        fecha: strDate,
+        saldo: saldofinal
     }
     listadoTransaccion.push(porHacer);
     guardarDB();
+    listadoPersona[0].saldo = saldofinal;
+    guardarPersonaDB();
     return porHacer;
 }
-const getListado = () => {
-        cargarTransaccionDB();
-        return listadoTransaccion;
+
+const actualizar = (tipotransaccion, monto, saldo) => {
+    let saldototal = Number(0);
+    if (tipotransaccion == 1) {
+        saldototal = Number(saldo) + Number(monto);
+    } else if (tipotransaccion == 2) {
+        saldototal = Number(saldo) - Number(monto);
     }
-    // const actualizar = (descripcion, completado = true) => {
-    //     cargarDB();
-    //     let index = listadoPorHacer.findIndex(tarea => {
-    //         return tarea.descripcion === descripcion;
-    //     });
-    //     if (index >= 0) {
-    //         listadoPorHacer[index].completado = completado;
-    //         guardarDB();
-    //         return true;
-    //     } else {
-    //         return false;
-    //     }
-    // }
-    // const borrar = (descripcion) => {
-    //     cargarDB();
-    //     let nuevoListado = listadoPorHacer.filter(tarea => {
-    //         return tarea.descripcion !== descripcion;
-    //     });
-    //     if (listadoPorHacer.length == nuevoListado.length) {
-    //         return false;
-    //     } else {
-    //         listadoPorHacer = nuevoListado;
-    //         guardarDB();
-    //         return true;
-    //     }
-    // }
+
+    return saldototal;
+}
+const getListado = () => {
+    cargarTransaccionDB();
+    //console.log(listadoTransaccion);
+    return listadoTransaccion;
+}
+
+
+//persona
+const guardarPersonaDB = () => {
+    let data = JSON.stringify(listadoPersona);
+    fs.writeFile('db/persona.json', data, (err) => {
+        if (err) throw new Error('No se pudo grabar', err);
+    });
+
+}
+const actualizarSaldoPersona = (saldo) => {
+    cargarPersonaDB();
+
+    listadoPersona[0].saldo = saldo;
+    guardarPersonaDB();
+
+}
+
+// const borrar = (descripcion) => {
+//     cargarDB();
+//     let nuevoListado = listadoPorHacer.filter(tarea => {
+//         return tarea.descripcion !== descripcion;
+//     });
+//     if (listadoPorHacer.length == nuevoListado.length) {
+//         return false;
+//     } else {
+//         listadoPorHacer = nuevoListado;
+//         guardarDB();
+//         return true;
+//     }
+// }
 
 app.post('/listatransacciones', (req, res) => {
     res.json({
@@ -75,10 +113,13 @@ app.post('/listatransacciones', (req, res) => {
     });
 });
 app.post('/guardar', (req, res) => {
-    let lresul = crear(50, 1);
+
+    // console.log(req.body.monto);
+    let lresul = crear(req.body.monto, req.body.tipotransaccion);
     res.json({
         ok: true,
-        listado: lresul
+        result: lresul,
+        listado: getListado()
     });
 });
 

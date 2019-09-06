@@ -10,17 +10,17 @@
     <tr>
          <td>
           
-                <input type="text" class="form-control" placeholder="Monto" aria-label="Username" aria-describedby="basic-addon1">
+                <input type="text" id="txbMonto" class="form-control" placeholder="Monto" aria-label="Username" aria-describedby="basic-addon1">
            
         </td>
         <td>
-            <select class="form-control">
+            <select class="form-control" id="ddlTipoTransaccion">
                 <option value="1">Ingreso</option>
                 <option value="2">Salida</option>
             </select>
         </td>
         <td>
-            <button type="button" class="btn btn-primary">Transaccion</button>
+            <button type="button" id="btnTransaccion" class="btn btn-primary">Transaccion</button>
         </td>
     </tr>    
     </table>    
@@ -50,8 +50,8 @@
             <th scope="col">Total</th>
             </tr>
         </thead>
-        <tbody>
-            <tr>
+        <tbody id="tbody">
+            {{!-- <tr>
             <th scope="row">1</th>
             <td>Mark</td>
             <td>Otto</td>
@@ -68,9 +68,11 @@
             <td>Larry</td>
             <td>the Bird</td>
             <td>@twitter</td>
-            </tr>
+            </tr> --}}
         </tbody>
     </table>
+
+   
 </div>
 
 {{>footer}}
