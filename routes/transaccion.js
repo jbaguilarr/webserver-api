@@ -56,11 +56,18 @@ const crear = (montox, xtipotransaccion) => {
     guardarDB();
     listadoPersona[0].saldo = saldofinal;
     guardarPersonaDB();
+
+
     return porHacer;
 }
 
 const actualizar = (tipotransaccion, monto, saldo) => {
+
     let saldototal = Number(0);
+
+    if (tipotransaccion == 2 && saldo < monto)
+        return 0;
+
     if (tipotransaccion == 1) {
         saldototal = Number(saldo) + Number(monto);
     } else if (tipotransaccion == 2) {
@@ -92,20 +99,25 @@ const actualizarSaldoPersona = (saldo) => {
 
 }
 
-// const borrar = (descripcion) => {
-//     cargarDB();
-//     let nuevoListado = listadoPorHacer.filter(tarea => {
-//         return tarea.descripcion !== descripcion;
-//     });
-//     if (listadoPorHacer.length == nuevoListado.length) {
-//         return false;
-//     } else {
-//         listadoPorHacer = nuevoListado;
-//         guardarDB();
-//         return true;
-//     }
-// }
+const saldoActual = () => {
+    cargarPersonaDB();
+    return listadoPersona[0].saldo;
+}
 
+let cargaInicial = () => {
+    let listadoTransaccion = []; //{ "id": 1, "monto": 0, "tipotransaccion": 1, "idpersona": 1, "fecha": "03/09/2019", "saldo": 0 }
+    let data = JSON.stringify(listadoTransaccion);
+    fs.writeFile('db/transaction.json', data, (err) => {
+        if (err) throw new Error('No se pudo grabar', err);
+    });
+
+
+    let listadopersona = [{ "id": 1, "nombre": "Jose Bruno", "app": "Aguilar", "apm": "Omonte", "cuenta": "825445362541", "saldo": 0 }];
+    let datapersona = JSON.stringify(listadopersona);
+    fs.writeFile('db/persona.json', datapersona, (err) => {
+        if (err) throw new Error('No se pudo grabar', err);
+    });
+}
 app.post('/listatransacciones', (req, res) => {
     res.json({
         ok: true,
@@ -123,10 +135,12 @@ app.post('/guardar', (req, res) => {
     });
 });
 
-module.exports = app;
-// module.exports = {
-//     crear,
-//     getListado,
-//     actualizar,
-//     borrar
-// }
+// module.exports = app;
+module.exports = {
+    app,
+    crear,
+    getListado,
+    actualizar,
+    cargaInicial,
+    saldoActual
+}
