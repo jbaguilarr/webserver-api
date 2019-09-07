@@ -19,7 +19,7 @@ jQuery(document).ready(function() {
         };
         sendDataAjax("guardar", dto, function(data, status) {
             console.log(data);
-            imprimir(data.result);
+            imprimir(data.listado);
         });
     });
 
@@ -37,19 +37,21 @@ function CargaInicial() {
 }
 
 function imprimir(data) {
-    jtbody.append(" <tr> <th scope='row'>" + data.fecha + "</th>  <td>" + (data.tipotransaccion == 1 ? "Ingreso" : "Salida") + "</td>   <td>" + (data.tipotransaccion == 1 ? "" + data.monto : "-" + data.monto) + "</td> <td>" + data.saldo + "</td>  </tr>");
-    /*for (var j = 0; j < data.length; j++) {
+    // jtbody.append(" <tr> <th scope='row'>" + data.fecha + "</th>  <td>" + (data.tipotransaccion == 1 ? "Ingreso" : "Salida") + "</td>   <td>" + (data.tipotransaccion == 1 ? "" + data.monto : "-" + data.monto) + "</td> <td>" + data.saldo + "</td>  </tr>");
+    var jtr = "";
+    for (var j = 0; j < data.length; j++) {
 
-        jtbody.append(" <tr> <th scope='row'>" + data[j].fecha + "</th>  <td>" + data[j].tipotransaccion + "</td>   <td>" + data[j].monto + "</td> <td>" + data[j].saldo + "</td>  </tr>");
-    }*/
+        jtr = jtr + (" <tr> <th scope='row'>" + data[j].fecha + "</th>  <td>" + (data[j].tipotransaccion == 1 ? "Ingreso" : "Salida") + "</td>   <td>" + (data[j].tipotransaccion == 1 ? "" + data[j].monto : "-" + data[j].monto) + "</td> <td>" + data[j].saldo + "</td>  </tr>");
+    }
 
+    jtbody.html(jtr);
 }
 
 function sendDataAjax(NombreAjax, dto, callbackExito) {
     var dd = JSON.stringify(dto);
 
     $.ajax({
-        url: "/" + NombreAjax,
+        url: "http://localhost:3000/" + NombreAjax,
         data: JSON.stringify(dto),
         dataType: "json",
         type: "POST",

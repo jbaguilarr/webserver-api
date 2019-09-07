@@ -39,15 +39,15 @@ app.listen(port, () => {
     console.log(`Escuchando peticiones en el puerto ${port}`);
 
 
-    let listadoTransaccion = []; //{ "id": 1, "monto": 0, "tipotransaccion": 1, "idpersona": 1, "fecha": "03/09/2019", "saldo": 0 }
-    let data = JSON.stringify(listadoTransaccion);
+    var listadoTransaccion = []; //{ "id": 1, "monto": 0, "tipotransaccion": 1, "idpersona": 1, "fecha": "03/09/2019", "saldo": 0 }
+    var data = JSON.stringify(listadoTransaccion);
     fs.writeFile('db/transaction.json', data, (err) => {
         if (err) throw new Error('No se pudo grabar', err);
     });
 
 
-    let listadopersona = [{ "id": 1, "nombre": "Jose Bruno", "app": "Aguilar", "apm": "Omonte", "cuenta": "825445362541", "saldo": 0 }];
-    let datapersona = JSON.stringify(listadopersona);
+    var listadopersona = [{ "id": 1, "nombre": "Jose Bruno", "app": "Aguilar", "apm": "Omonte", "cuenta": "825445362541", "saldo": 0 }];
+    var datapersona = JSON.stringify(listadopersona);
     fs.writeFile('db/persona.json', datapersona, (err) => {
         if (err) throw new Error('No se pudo grabar', err);
     });

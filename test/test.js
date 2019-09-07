@@ -1,5 +1,5 @@
 let assert = require('assert');
-const tran = require('../routes/transaccion');
+const tran = require('../models/transaccion');
 describe('Transacciones', function() {
     tran.cargaInicial();
     it('Monto de Ingreso', function() {
