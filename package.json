@@ -10,7 +10,7 @@
     "author": "Jose Bruno Aguilar Omonte",
     "license": "ISC",
     "dependencies": {
-        "express": "^4.16.4",
+        "express": "^4.17.3",
         "hbs": "^4.0.1",
         "request-promise": "^4.2.4",
         "body-parser": "^1.18.3"
